@@ -5,11 +5,12 @@ import { Avatar, IconButton } from "@mui/material";
 import {
   Chat,
   DonutLarge,
+  LogoutOutlined,
   MoreVert,
   SearchOutlined,
 } from "@mui/icons-material";
 import SidebarChat from "./SidebarChat";
-import db from "./firebase";
+import db, { auth } from "./firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useStateValue } from "./StateProvider";
 
@@ -32,6 +33,12 @@ function Sidebar() {
     };
   }, []);
 
+  const handleAuthentication = () => {
+    if (user) {
+      auth.signOut();
+    }
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -45,6 +52,9 @@ function Sidebar() {
           </IconButton>
           <IconButton>
             <MoreVert />
+          </IconButton>
+          <IconButton onClick={handleAuthentication}>
+            <LogoutOutlined />
           </IconButton>
         </div>
       </div>
